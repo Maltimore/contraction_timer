@@ -31,7 +31,7 @@ def parse_log_file(log_file_name):
 def parse_timedelta_to_minutes_string(timedelta):
     minutes = math.floor(timedelta.seconds / 60)
     seconds = timedelta.seconds % 60
-    return f'{minutes} minutes {seconds} seconds'
+    return f'{str(minutes).zfill(2)}:{str(seconds).zfill(2)} minutes'
 
 
 def wait_for_start(log_file, last_start):
