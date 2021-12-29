@@ -16,3 +16,5 @@ In order to get a visual representation of the contractions, type
 python plot.py
 ```
 in your terminal.
+
+![Example plot](examples/plot.png)
