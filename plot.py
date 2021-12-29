@@ -3,6 +3,7 @@ import math
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 
 def parse_log_file(log_file):
@@ -33,10 +34,18 @@ def parse_log_file(log_file):
 log_file_name = 'log.txt'
 starts, start_intervals, durations = parse_log_file(log_file_name)
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(constrained_layout=True)
 ax.plot(starts, start_intervals, color='blue')
 ax.set_ylabel('intervals [minutes]', color='blue')
+locator = mdates.AutoDateLocator(minticks=3, maxticks=10)
+formatter = mdates.ConciseDateFormatter(locator)
+ax.xaxis.set_major_locator(locator)
+ax.xaxis.set_major_formatter(formatter)
+ax.set_ylim(bottom=0)
 ax2 = ax.twinx()
 ax2.plot(starts, durations, color='red')
 ax2.set_ylabel('durations [seconds]', color='red')
+ax2.set_ylim(bottom=0)
+
+plt.savefig('plot.png')
 plt.show()
