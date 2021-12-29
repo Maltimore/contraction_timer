@@ -1,5 +1,6 @@
 import os
 import datetime
+import math
 
 
 def parse_log_file(log_file_name):
@@ -27,6 +28,12 @@ def parse_log_file(log_file_name):
     return state, last_start
 
 
+def parse_timedelta_to_minutes_string(timedelta):
+    minutes = math.floor(timedelta.seconds / 60)
+    seconds = timedelta.seconds % 60
+    return f'{minutes} minutes {seconds} seconds'
+
+
 def wait_for_start(log_file, last_start):
     _ = input()
     start = datetime.datetime.now()
@@ -34,8 +41,7 @@ def wait_for_start(log_file, last_start):
     print(start_string)
     log_file.write(start_string + '\n')
     if last_start is not None:
-        time_between_starts = start - last_start
-        time_between_starts_string = f'TIME BETWEEN STARTS: {time_between_starts.seconds} seconds'
+        time_between_starts_string = f'TIME BETWEEN STARTS: {parse_timedelta_to_minutes_string(start - last_start)}'
         print(time_between_starts_string)
         log_file.write(time_between_starts_string + '\n')
 
@@ -49,8 +55,7 @@ def wait_for_end(log_file, last_start):
     print(end_string)
     log_file.write(end_string + '\n')
 
-    duration = (end - last_start).seconds
-    duration_string = f'DURATION: {duration} seconds'
+    duration_string = f'DURATION: {parse_timedelta_to_minutes_string(end - last_start)}'
     print(duration_string)
     log_file.write(duration_string + '\n')
 
