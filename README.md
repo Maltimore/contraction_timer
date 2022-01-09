@@ -17,4 +17,7 @@ python plot.py
 ```
 in your terminal.
 
+
+Here is an example of a visualization of a real-world log (log and plot found in examples folder):
+
 ![Example plot](examples/plot.png)
