@@ -22,7 +22,7 @@ def parse_log_file(log_file):
 
     start_intervals = []
     for i in range(1, len(starts)):
-        start_intervals.append(math.floor((starts[i] - starts[i - 1]).seconds / 60))
+        start_intervals.append((starts[i] - starts[i - 1]).seconds / 60)
 
     durations = []
     for i in range(len(starts)):
