@@ -1,5 +1,4 @@
 import datetime
-import math
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -28,14 +27,14 @@ def parse_log_file(log_file):
     for i in range(len(starts)):
         durations.append((ends[i] - starts[i]).seconds)
 
-    return np.array(starts[1:]), np.array(start_intervals), np.array(durations[:-1])
+    return np.array(starts), np.array(start_intervals), np.array(durations)
 
 
 log_file_name = 'log.txt'
 starts, start_intervals, durations = parse_log_file(log_file_name)
 
 fig, ax = plt.subplots(constrained_layout=True)
-ax.plot(starts, start_intervals, color='blue')
+ax.plot(starts[1:], start_intervals, color='blue')
 ax.set_ylabel('intervals [minutes]', color='blue')
 locator = mdates.AutoDateLocator(minticks=3, maxticks=10)
 formatter = mdates.ConciseDateFormatter(locator)
