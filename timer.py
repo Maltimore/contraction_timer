@@ -13,19 +13,27 @@ def parse_log_file(log_file_name):
         log = f.read()
 
     lines = log.splitlines()
+
+    # no log was written yet
     if len(lines) == 0:
         state = 'no_contraction'
         last_start = None
-    elif lines[-2].startswith('START'):
-        state = 'contraction'
-        last_start = datetime.datetime.fromisoformat(lines[-2][7:])
-    elif lines[-2].startswith('END'):
-        state = 'no_contraction'
-        last_start = datetime.datetime.fromisoformat(lines[-2][5:])
-    else:
-        raise Exception('Could not parse log file!')
+        return state, last_start
 
-    return state, last_start
+    # search for last line that starts with START or END
+    for idx, line in enumerate(lines[::-1]):
+        if line.startswith('START'):
+            state = 'contraction'
+            last_start = datetime.datetime.fromisoformat(line[7:])
+            return state, last_start
+        elif line.startswith('END'):
+            state = 'no_contraction'
+            break
+    # we're in no contraction but still need to find out when the last contraction started
+    for line in lines[::-1][idx:]:
+        if line.startswith('START'):
+            last_start = datetime.datetime.fromisoformat(line[7:])
+            return state, last_start
 
 
 def parse_timedelta_to_minutes_string(timedelta):
