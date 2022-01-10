@@ -21,7 +21,7 @@ def parse_log_file(log_file_name):
         return state, last_start
 
     # search for last line that starts with START or END
-    for idx, line in enumerate(lines[::-1]):
+    for line in lines[::-1]:
         if line.startswith('START'):
             state = 'contraction'
             last_start = datetime.datetime.fromisoformat(line[7:])
@@ -30,7 +30,7 @@ def parse_log_file(log_file_name):
             state = 'no_contraction'
             break
     # we're in no contraction but still need to find out when the last contraction started
-    for line in lines[::-1][idx:]:
+    for line in lines[::-1]:
         if line.startswith('START'):
             last_start = datetime.datetime.fromisoformat(line[7:])
             return state, last_start
