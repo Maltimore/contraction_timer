@@ -53,6 +53,7 @@ def wait_for_start(log_file, last_start):
         print(time_between_starts_string)
         log_file.write(time_between_starts_string + '\n')
 
+    log_file.flush()
     wait_for_end(log_file, start)
 
 
@@ -67,6 +68,7 @@ def wait_for_end(log_file, last_start):
     print(duration_string)
     log_file.write(duration_string + '\n')
 
+    log_file.flush()
     wait_for_start(log_file, last_start)
 
 
